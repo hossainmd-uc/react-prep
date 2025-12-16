@@ -1,0 +1,27 @@
+
+.card {
+    width:200px;
+    background-color: rgb(198, 215, 172);
+    overflow-wrap: break-word;
+
+    border-radius: 10px;
+    padding-bottom: 10px;
+
+    transition: scale 100ms ease-in;
+}
+
+.card:hover {
+    scale: 105%;
+}
+
+.button {
+    border-radius: 0px;
+    border: 0px;
+    padding: 5px;
+    width:60%;
+    height: 30px;
+}
+
+.button:hover {
+    cursor: pointer;
+}
