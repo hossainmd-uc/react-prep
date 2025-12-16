@@ -1,0 +1,33 @@
+
+.Event{
+    margin: auto;
+    padding: 8px;
+}
+
+.red {
+  background-color: #ef4444;
+}
+
+.blue {
+  background-color: #3b82f6;
+}
+
+.green {
+  background-color: #22c55e;
+}
+
+.yellow {
+  background-color: #eab308;
+}
+
+.purple {
+  background-color: #a855f7;
+}
+
+.orange {
+  background-color: #f97316;
+}
+
+.gray {
+  background-color: #9ca3af;
+}
