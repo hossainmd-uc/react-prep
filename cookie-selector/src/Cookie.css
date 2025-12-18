@@ -1,0 +1,25 @@
+
+
+.cookie-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+
+}
+
+img {
+    width: 300px;
+    height: 300px;
+
+    transition: scale .5s;
+}
+
+img:active {
+    scale: 120%;
+}
+
+.reset:active {
+    filter:brightness(120%)
+}
+
