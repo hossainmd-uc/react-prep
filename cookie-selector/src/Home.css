@@ -1,0 +1,23 @@
+
+.btn {
+  display: inline-block;
+  padding: 10px 16px;
+  /* background: #2563eb; */
+  color: white;
+  border-radius: 6px;
+  text-decoration: none;
+  background-color: rgb(149, 166, 18);
+}
+
+.btn:hover {
+  scale:110%;
+}
+
+.title {
+  font-size: 40px;
+  font-weight: bold;
+}
+
+
+
+

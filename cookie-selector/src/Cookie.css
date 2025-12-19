@@ -5,13 +5,13 @@
     flex-direction: column;
     justify-content: center;
     gap: 20px;
+    align-items: center;
 
 }
 
 img {
     width: 300px;
     height: 300px;
-
     transition: scale .5s;
 }
 
@@ -23,3 +23,27 @@ img:active {
     filter:brightness(120%)
 }
 
+.container {
+  position: relative;
+  min-width: 700px;
+}
+
+.home-btn {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+
+  display: inline-block; 
+  color: white;
+  text-decoration: none;
+  background-color: #1a1a1a;
+  
+  padding: 10px;
+  border-radius: 5px;
+
+  
+}
+
+.reset {
+    max-width: 100px;
+}

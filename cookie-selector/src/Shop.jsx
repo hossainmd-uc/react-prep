@@ -38,7 +38,7 @@ const Shop = () => {
 
         list.push('2x')
         setCount(prev => prev - 100)
-        const nextCount = count;
+        const nextCount = count - 100;
 
         localStorage.setItem('cookieCount', JSON.stringify(nextCount))
         localStorage.setItem('powerUps', JSON.stringify(list))
