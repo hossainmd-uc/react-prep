@@ -3,7 +3,7 @@ import './BaristaForm.css'
 import RecipeChoices from './RecipeChoices';
 
 import drinksJson from "./drinks.json"
-
+import { TbRefreshDot } from "react-icons/tb";
 
 const BaristaForm = () => {
 
@@ -119,7 +119,7 @@ const BaristaForm = () => {
             <button
                 className="button newdrink"
                 onClick={onNewDrink}>
-                🔄
+                <TbRefreshDot className='refresh'/>
             </button>
         </div>
 
@@ -196,13 +196,15 @@ const BaristaForm = () => {
             
         </form>
 
-        <button className="button submit" onClick={onCheckAnswer}>
-            Check Answer
-        </button>
+        <div className='footer-btns'>
+            <button className="bottom-btn submit" onClick={onCheckAnswer}>
+                Check Answer
+            </button>
 
-        <button className="button newdrink" onClick={onNewDrink}>
-            New Drink
-        </button>
+            <button className="bottom-btn newdrink" onClick={onNewDrink}>
+                New Drink
+            </button>
+        </div>
     </div>
 
   )

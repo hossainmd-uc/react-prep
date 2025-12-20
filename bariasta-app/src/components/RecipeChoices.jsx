@@ -3,24 +3,24 @@ import './RecipeChoices.css'
 
 const RecipeChoices = ({ handleChange, label, choices, checked }) => {
     return (
-      <div>
-        <div className="radio-buttons">
-            {choices && choices.map((choice, idx) => {
-                    return (<li key={idx}>
-                            <input 
-                            name={label}
-                            id={idx}
-                            value={choice}
-                            onChange={handleChange}
-                            type="radio"
-                            checked={checked === choice}
-                            />
-                            {choice}
-           
-                        </li>)
-            })}
-        </div>
-      </div>
+          <div className="radio-buttons">
+          {choices.map((choice, idx) => (
+            <li key={idx}>
+              <label className="radio">
+                <input
+                  type="radio"
+                  name={label}
+                  value={choice}
+                  checked={checked === choice}
+                  onChange={handleChange}
+                />
+                <span className="dot" />
+                {choice}
+              </label>
+            </li>
+          ))}
+       </div>
+
     );
 };
 
