@@ -1,33 +1,65 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState, useEffect } from 'react'
 import './App.css'
+import SkeletonBox from './components/SkeletonBox';
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const [loading, setLoading] = useState(true);
+  const [fetchData, setFetchData] = useState([])
+  const [imgUrl, setImgUrl] = useState('');
+
+  async function fetchImage(params) {
+
+    const url = 'https://api.thecatapi.com/v1/images/search'
+    const api_key = import.meta.env.VITE_API_KEY
+    // console.log(api_key)
+
+    const config = {headers: {
+      'x-api-key': api_key
+    }}
+
+    try {
+      setLoading(() => {
+        console.log("Loading...")
+        return true})
+      const response = await fetch(url, config)
+      if (!response.ok){
+        throw new Error(`HTTP ${response.status}`)
+     
+      }else{ 
+      const data = await response.json()
+      setFetchData(data)
+      setLoading(() => {
+      console.log("Loaded!")
+      return false})
+      setImgUrl(() => {
+        return data[0].url
+      })
+      }
+    } catch (e){
+      console.log('Error Exception: ', e)
+    }
+
+  }
+
+  useEffect(() => {
+    setLoading(() => {
+      console.log("Loading...")
+      return true})
+    fetchImage()
+  }, [])
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className='main-container'>
+        <div className='content'>
+          <div className='img-container'>
+            {loading ? <SkeletonBox />: imgUrl && <img className='cat-img' src={imgUrl}/>}
+          </div>
+              <button className='btn' onClick={fetchImage}>New Cat</button>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+
     </>
   )
 }
