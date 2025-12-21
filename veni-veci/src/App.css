@@ -40,3 +40,20 @@
   cursor: pointer;
 }
 
+.cat-logo {
+  width: 120px;
+  object-fit: scale-down;
+}
+
+.header{
+  display: flex;
+  justify-content: center;
+
+
+}
+
+.title {
+  font-size: 100px;
+  margin:0;
+  padding: 0;
+}

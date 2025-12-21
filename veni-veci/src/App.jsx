@@ -85,11 +85,21 @@ function App() {
   }, [])
 
   return (
+
+
     <>
+    <head>
+      <title>CatGen</title>
+      <link href='cat.png' rel='icon'/>
+    </head>
+    <div  className='header'>
+      <img className='cat-logo' src='cat.png'/>
+      <p className='title'>CatGen</p>
+    </div>
       <div className='main-container'>
         <div className='banned-section'>
           <h4>Banned Terms</h4>
-        {
+        {(bannedTerms.length > 0) ?
           
           bannedTerms.map((term) => {
             return (
@@ -98,8 +108,10 @@ function App() {
               </>
             )
           })
+          :
+          <button>Click on a trait!</button>
 
-        }
+        } 
         </div>
         <div className='content'>
           <div className='img-container'>
