@@ -1,8 +1,26 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 import SkeletonBox from './components/SkeletonBox';
+import Cat from './components/Cat';
+import Attributes from './components/Attributes';
 
 function App() {
+
+  const [bannedTerms, setBannedTerms] = useState([])
+
+  const addBannedTerm = (term) => {
+    if (!bannedTerms.includes(term)){
+      setBannedTerms((prev)  => {
+        return [...prev, term] 
+      })
+    }
+
+  }
+
+  const removeBannedTerm = (term) => {
+    const idx = bannedTerms.indexOf(term)
+    setBannedTerms(bannedTerms.splice(idx, 1))
+  }
 
   const [loading, setLoading] = useState(true);
   const [fetchData, setFetchData] = useState([])
@@ -10,7 +28,7 @@ function App() {
 
   async function fetchImage(params) {
 
-    const url = 'https://api.thecatapi.com/v1/images/search'
+    const url = 'https://api.thecatapi.com/v1/images/search?has_breeds=1'
     const api_key = import.meta.env.VITE_API_KEY
     // console.log(api_key)
 
@@ -20,7 +38,6 @@ function App() {
 
     try {
       setLoading(() => {
-        console.log("Loading...")
         return true})
       const response = await fetch(url, config)
       if (!response.ok){
@@ -30,7 +47,6 @@ function App() {
       const data = await response.json()
       setFetchData(data)
       setLoading(() => {
-      console.log("Loaded!")
       return false})
       setImgUrl(() => {
         return data[0].url
@@ -44,7 +60,6 @@ function App() {
 
   useEffect(() => {
     setLoading(() => {
-      console.log("Loading...")
       return true})
     fetchImage()
   }, [])
@@ -52,14 +67,30 @@ function App() {
   return (
     <>
       <div className='main-container'>
+        <div className='banned-section'>
+          <h4>Banned Terms</h4>
+        {
+          
+          bannedTerms.map((term) => {
+            return (
+              <>
+                <button className='banned-btn' onClick={() => {removeBannedTerm(term)}}>{term}</button>
+              </>
+            )
+          })
+
+        }
+        </div>
         <div className='content'>
           <div className='img-container'>
-            {loading ? <SkeletonBox />: imgUrl && <img className='cat-img' src={imgUrl}/>}
+            {loading ? <SkeletonBox />: imgUrl && <Cat img={imgUrl}/>}
           </div>
-              <button className='btn' onClick={fetchImage}>New Cat</button>
+             
+              <button className='btn' onClick={fetchImage}>New Cat</button> 
         </div>
+        
+        <Attributes addBan={addBannedTerm} data={fetchData} />
       </div>
-
     </>
   )
 }

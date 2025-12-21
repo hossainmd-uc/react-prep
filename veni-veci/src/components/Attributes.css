@@ -1,0 +1,21 @@
+.btn {
+  width: auto;
+
+  border: none;
+  border-radius: 20px;
+
+  padding: 12px;
+  margin: 10px;
+}
+
+.btn:hover {
+  background-color: rgb(116, 38, 188);
+  cursor: pointer;
+}
+
+.attributes {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+}
