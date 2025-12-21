@@ -4,13 +4,13 @@ import './Attributes.css'
 const Attributes = ({addBan, data}) => {
 
     useState(() => {
-        console.log(data)
+        // console.log(data)
     }, [data])
 
   return (
     <div >
         {data.length > 0 && data.map((element, i) => {
-            console.log(element.breeds[0])
+            // console.log(element.breeds[0])
             return(
                 <div className='attributes' key={element.breeds[0].name + ' ' + i}>
                     <h5>Name</h5>
@@ -21,7 +21,7 @@ const Attributes = ({addBan, data}) => {
                     {
                         element.breeds[0].temperament.split(',').map((temp, i) => {
                             return(
-                                <button onClick={() => {addBan(temp)}}>{temp}</button>
+                                <button onClick={() => {addBan(temp.trim())}}>{temp}</button>
                             )
                         })
                     }

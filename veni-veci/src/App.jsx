@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './App.css'
 import SkeletonBox from './components/SkeletonBox';
 import Cat from './components/Cat';
@@ -7,6 +7,12 @@ import Attributes from './components/Attributes';
 function App() {
 
   const [bannedTerms, setBannedTerms] = useState([])
+
+  const bannedTermsRef = useRef(bannedTerms);
+
+  useEffect(() => {
+      bannedTermsRef.current = bannedTerms;
+    }, [bannedTerms]);
 
   const addBannedTerm = (term) => {
     if (!bannedTerms.includes(term)){
@@ -18,19 +24,19 @@ function App() {
   }
 
   const removeBannedTerm = (term) => {
-    const idx = bannedTerms.indexOf(term)
-    setBannedTerms(bannedTerms.splice(idx, 1))
+    setBannedTerms(prev => prev.filter(t => t !== term))
   }
 
   const [loading, setLoading] = useState(true);
   const [fetchData, setFetchData] = useState([])
   const [imgUrl, setImgUrl] = useState('');
 
-  async function fetchImage(params) {
+  const delay = ms => new Promise(res => setTimeout(res, ms));
+
+  async function fetchImage() {
 
     const url = 'https://api.thecatapi.com/v1/images/search?has_breeds=1'
     const api_key = import.meta.env.VITE_API_KEY
-    // console.log(api_key)
 
     const config = {headers: {
       'x-api-key': api_key
@@ -44,13 +50,27 @@ function App() {
         throw new Error(`HTTP ${response.status}`)
      
       }else{ 
-      const data = await response.json()
-      setFetchData(data)
-      setLoading(() => {
-      return false})
-      setImgUrl(() => {
-        return data[0].url
-      })
+        const data = await response.json()
+        const catInfo = data[0].breeds[0]
+        const attributes = [catInfo.name, catInfo.origin, ...catInfo.temperament.split(',')]
+
+        console.log(attributes)
+
+        console.log(bannedTermsRef.current)
+        const containsBanned = attributes.some(attr => bannedTermsRef.current.includes(attr.trim()))
+        console.log(containsBanned)
+
+          
+        if (containsBanned) {
+          console.log("Loading New Cat!");
+          await delay(2000)
+          fetchImage()
+        } else{
+          setFetchData(data)
+          setLoading(false)
+          setImgUrl(data[0].url)
+
+      }
       }
     } catch (e){
       console.log('Error Exception: ', e)
