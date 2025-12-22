@@ -1,4 +1,7 @@
 
+.autocomplete {
+  position: relative;
+}
 
 .input-container {
     display: flex;

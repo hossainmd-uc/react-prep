@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 
 import './Search.css'
 import SearchCard from './SearchCard'
+import Dropdown from './Dropdown'
 
 const Search = ({searchData, setSearchData}) => {
 
     const [params, setParams] = useState({
+        query: '',
         quantity: '',
         cuisine: '', 
         diet: '',
@@ -14,6 +16,57 @@ const Search = ({searchData, setSearchData}) => {
         max_carbs: '',
         max_calories: '', 
     })
+
+    const [queryAuto, setQueryAuto] = useState([])
+
+    async function queryAutocomplete (){
+
+        const apiKey = import.meta.env.VITE_API_KEY
+
+        const rawParams = {
+            apiKey,
+            query: params.query,
+            cuisine: params.cuisine,
+            minProtein: params.min_protein,
+            maxCarbs: params.max_carbs,
+            maxCalories: params.max_calories,
+            number: params.quantity
+
+        }
+
+
+        const queryParams = new URLSearchParams(Object.entries(rawParams).filter(([_, x]) => (x !== '' && x !== undefined)))
+        const url = `https://api.spoonacular.com/recipes/autocomplete?${queryParams}`
+
+        
+        try {
+            const response = await fetch(url)
+
+            if (!response.ok){
+                throw new Error(`HTTP ${response.status}`)
+            }else{
+                const data = await response.json()
+                console.log(data)
+                setQueryAuto(data)
+            }
+
+        }catch (e){
+            console.log(`Exception: ${e}`)
+        }
+        
+    }
+
+    useEffect(() => {
+        if (!params.query){
+            setQueryAuto([])
+            return
+        }
+
+        const t = setTimeout(queryAutocomplete, 300)
+        return () => clearTimeout(t)
+        
+    }, [params.query])
+
 
     function adjustParams(e) {
         const {name, value} = e.target
@@ -28,6 +81,7 @@ async function search(e) {
 
         const apiKey = import.meta.env.VITE_API_KEY
         const rawParams = {
+                query: params.query,
                 apiKey,
                 cuisine: params.cuisine,
                 minProtein: params.min_protein,
@@ -35,10 +89,13 @@ async function search(e) {
                 maxCalories: params.max_calories,
                 number: params.quantity,
             };
-        const query = new URLSearchParams(
+        const queryParams = new URLSearchParams(
             Object.entries(rawParams).filter(([_, value]) => (value !== undefined && value !== '')));
 
-        const url = `https://api.spoonacular.com/recipes/complexSearch?${query.toString()}`
+        
+        const url = `https://api.spoonacular.com/recipes/complexSearch?${queryParams.toString()}`
+        console.log(url)
+
         try{
             const response = await fetch(url)
 
@@ -63,7 +120,7 @@ async function search(e) {
             {
                 Object.keys(params).map((key) => {
                     return (
-                        <div key={key} className='input-subcontainer'>
+                        <div key={key} className={`input-subcontainer ${key === 'query'? 'autocomplete' : ""}`}>
                             <h5>{key}</h5>
                                 <input 
                                 onChange={adjustParams} 
@@ -71,6 +128,7 @@ async function search(e) {
                                 value={params[key]} 
                                 name={key} 
                                 type='text' />
+                            {key=='query' && <Dropdown setParams={setParams} suggestions={queryAuto}/>}
                         </div>
                     )
                 }) 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './SearchCard.css'
 
 const SearchCard = ({data}) => {
@@ -6,10 +6,10 @@ const SearchCard = ({data}) => {
   return (
     <div className='main'>
         {
-
-        data && data.results.map((res, i) => {
+  
+        data?.results?.map((res) => {
             return(
-                <div className='container'>
+                <div key={res.id} className='container'>
                     <h3 className='title'>{res.title}</h3>
                     <img className='img' src={res.image}/>
                 </div>

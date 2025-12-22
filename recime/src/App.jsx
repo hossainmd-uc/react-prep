@@ -4,7 +4,7 @@ import Search from './components/Search'
 
 function App() {
 
-  const [searchData, setSearchData] = useState([])
+  const [searchData, setSearchData] = useState({})
 
   const api_key = import.meta.env.VITE_API_KEY
   return (
