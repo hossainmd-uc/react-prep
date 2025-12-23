@@ -7,6 +7,8 @@ import Dropdown from './Dropdown'
 
 const Search = ({searchData, setSearchData}) => {
 
+    const [isFocused, setIsFocused] = useState(false)
+
     const [params, setParams] = useState({
         query: '',
         quantity: '',
@@ -123,12 +125,14 @@ async function search(e) {
                         <div key={key} className={`input-subcontainer ${key === 'query'? 'autocomplete' : ""}`}>
                             <h5>{key}</h5>
                                 <input 
+                                onFocus={key=='query' ? () => setIsFocused(true): null}
+                                onBlur={key=='query' ? () => setIsFocused(false): null}
                                 onChange={adjustParams} 
                                 className='search-input' 
                                 value={params[key]} 
                                 name={key} 
                                 type='text' />
-                            {key=='query' && <Dropdown setParams={setParams} suggestions={queryAuto}/>}
+                            {(key=='query' && isFocused) && <Dropdown setParams={setParams} suggestions={queryAuto}/>}
                         </div>
                     )
                 }) 

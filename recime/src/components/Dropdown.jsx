@@ -1,4 +1,5 @@
 import React from 'react'
+import './Dropdown.css'
 
 const Dropdown = ({ setParams, suggestions }) => {
 
@@ -15,9 +16,9 @@ const Dropdown = ({ setParams, suggestions }) => {
 
                 <ul className="dropdown">
                     {suggestions.map(item => (
-                        <li
+                        <li className='auto-options'
                             key={item.id}
-                            onClick={() => selectSuggestion(item)}
+                            onMouseDown={() => selectSuggestion(item)}
                         >
                             {item.title}
                         </li>

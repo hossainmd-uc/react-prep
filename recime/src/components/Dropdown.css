@@ -5,4 +5,23 @@
   left: 0;
   right: 0;
   z-index: 1000;
+
+  margin: 0;     /* remove default margin */
+  padding: 4px;    /* remove default indent */
+
+  height: 200px;
+  overflow:scroll;
+
+  list-style-type: none;
+  background-color: black;
+
+  text-align: left;
+
+}
+
+.auto-options {
+  cursor: pointer;
+}
+.auto-options:hover {
+  background-color: aqua;
 }
