@@ -1,28 +1,71 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+:root{
+  /* Bistro palette */
+  --bg: #0f0f10;                 /* charcoal */
+  --bg-2: #141315;               /* warm slate */
+  --surface: rgba(255,255,255,0.04);
+  --surface-2: rgba(255,255,255,0.06);
+  --border: rgba(255,255,255,0.12);
+
+  --text: rgba(255,255,255,0.92);
+  --muted: rgba(255,255,255,0.70);
+
+  --tomato: #ff4d4d;             /* tomato */
+  --paprika: #ff7a18;            /* paprika */
+  --basil: #2ecc71;              /* basil */
+  --cream: #fff1d6;              /* warm highlight */
+
+  --radius-lg: 18px;
+  --radius-md: 14px;
+
+  --shadow: 0 14px 34px rgba(0,0,0,0.40);
+  --shadow-soft: 0 8px 22px rgba(0,0,0,0.28);
+
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
+  color-scheme: dark;
+  color: var(--text);
+  background:
+    radial-gradient(900px 420px at 20% -10%, rgba(255, 122, 24, 0.14), transparent 55%),
+    radial-gradient(900px 420px at 85% 0%, rgba(255, 77, 77, 0.12), transparent 60%),
+    radial-gradient(600px 320px at 55% 110%, rgba(46, 204, 113, 0.08), transparent 60%),
+    linear-gradient(180deg, var(--bg-2), var(--bg));
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Links */
+a{
+  color: inherit;
+  text-decoration: none;
+}
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
+/* Better default form controls (affects your filter input too) */
+input, button{
+  font: inherit;
+}
+input::placeholder{
+  color: rgba(255,255,255,0.45);
+}
+
+/* Optional light scheme (keeps it classy) */
+@media (prefers-color-scheme: light){
+  :root{
+    color-scheme: light;
+    --bg: #fbf7f1;
+    --bg-2: #fffdf9;
+    --surface: rgba(20,16,12,0.05);
+    --surface-2: rgba(20,16,12,0.07);
+    --border: rgba(20,16,12,0.12);
+    --text: rgba(20,16,12,0.92);
+    --muted: rgba(20,16,12,0.64);
+
+    background:
+      radial-gradient(900px 420px at 20% -10%, rgba(255, 122, 24, 0.18), transparent 55%),
+      radial-gradient(900px 420px at 85% 0%, rgba(255, 77, 77, 0.16), transparent 60%),
+      radial-gradient(600px 320px at 55% 110%, rgba(46, 204, 113, 0.12), transparent 60%),
+      linear-gradient(180deg, var(--bg-2), var(--bg));
   }
 }

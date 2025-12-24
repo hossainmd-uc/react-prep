@@ -4,6 +4,9 @@ import SearchCard from "./SearchCard";
 import Dropdown from "./Dropdown";
 
 const Search = ({ searchData, setSearchData }) => {
+
+  const PAGE_SIZE = 100;
+
   const [isFocused, setIsFocused] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
 
@@ -16,6 +19,18 @@ const Search = ({ searchData, setSearchData }) => {
     max_carbs: "",
     max_calories: "",
   });
+
+  const [totalResults, setTotalResults] = useState(null)
+  const [page, setPage] = useState(0)
+
+
+  const [filterSearch, setFilterSearch] = useState('')
+
+  const setFilter = (e) => {
+
+    setFilterSearch(e.target.value)
+
+  }
 
   const [queryAuto, setQueryAuto] = useState([]);
 
@@ -30,7 +45,7 @@ const Search = ({ searchData, setSearchData }) => {
       minProtein: params.min_protein,
       maxCarbs: params.max_carbs,
       maxCalories: params.max_calories,
-      number: params.quantity,
+      number: 12,
     };
 
     const queryParams = new URLSearchParams(
@@ -63,8 +78,7 @@ const Search = ({ searchData, setSearchData }) => {
     setParams((prev) => ({ ...prev, [name]: value }));
   }
 
-  async function search(e) {
-    e.preventDefault();
+  async function fetchResults() {
 
     const apiKey = import.meta.env.VITE_API_KEY;
 
@@ -76,7 +90,8 @@ const Search = ({ searchData, setSearchData }) => {
       minProtein: params.min_protein,
       maxCarbs: params.max_carbs,
       maxCalories: params.max_calories,
-      number: params.quantity,
+      number: PAGE_SIZE,
+      offset: page * PAGE_SIZE
     };
 
     const queryParams = new URLSearchParams(
@@ -89,11 +104,25 @@ const Search = ({ searchData, setSearchData }) => {
       const response = await fetch(url);
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const parsed = await response.json();
+      console.log(parsed)
       setSearchData(parsed);
+      setTotalResults(parsed.totalResults)
     } catch (e) {
       console.log(`Exception detected: ${e}`);
     }
   }
+
+  function search(e) {
+    e.preventDefault();
+    setPage(0);
+    fetchResults();
+  }
+
+  useEffect(() => {
+    if (!params.query) return;
+    fetchResults();
+  }, [page])
+
 
   const hasResults = useMemo(
     () => Array.isArray(searchData?.results) && searchData.results.length > 0,
@@ -157,7 +186,7 @@ const Search = ({ searchData, setSearchData }) => {
             {/* Collapsible filters */}
             {showFilters && (
               <div className="filters-grid">
-                <div className="field">
+                {/* <div className="field">
                   <label>Quantity</label>
                   <input
                     className="field-input"
@@ -167,7 +196,7 @@ const Search = ({ searchData, setSearchData }) => {
                     placeholder="e.g. 10"
                     inputMode="numeric"
                   />
-                </div>
+                </div> */}
 
                 <div className="field">
                   <label>Cuisine</label>
@@ -232,11 +261,13 @@ const Search = ({ searchData, setSearchData }) => {
         </div>
       </section>
 
+
       {/* RESULTS */}
-      <section className="results-section">
+      {hasResults && <section className="results-section">
         <div className="results-inner">
           <div className="results-head">
-            <h2>Results</h2>
+            <h2>Results: {searchData.totalResults} in total</h2>
+            <input value={filterSearch} name='filter' onChange={setFilter} placeholder="Filter by text..." />
             <span className="results-count">
               {hasResults ? `${searchData.results.length} recipes` : "No results yet"}
             </span>
@@ -244,7 +275,7 @@ const Search = ({ searchData, setSearchData }) => {
 
           <div className="results-surface">
             {hasResults ? (
-              <SearchCard data={searchData} />
+              <SearchCard filter={filterSearch} data={searchData} />
             ) : (
               <div className="empty-state">
                 <p>Search something tasty to see recipes here.</p>
@@ -253,6 +284,10 @@ const Search = ({ searchData, setSearchData }) => {
           </div>
         </div>
       </section>
+      }
+      {Array.from({ length: Math.floor(totalResults / PAGE_SIZE) }).map((_, i) => (
+        <button key={i} onClick={() => setPage(i)}>{i + 1}</button>
+      ))}
     </div>
   );
 };
