@@ -26,7 +26,7 @@
 }
 
 .hero-inner{
-  max-width: 920px;
+  /* max-width: 920px; */
   margin: 0 auto;
   position: relative;
   z-index: 1;
@@ -60,6 +60,8 @@
   padding: 16px;
   box-shadow: var(--shadow-soft);
   backdrop-filter: blur(10px);
+
+  
 }
 
 /* Search row */

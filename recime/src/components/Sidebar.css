@@ -1,0 +1,22 @@
+
+.sidebar {
+    position:fixed;
+    
+    left: 0;
+    top: 0;
+    width: 240px;
+    height: 100vh;
+
+}
+
+.side-selections {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+}

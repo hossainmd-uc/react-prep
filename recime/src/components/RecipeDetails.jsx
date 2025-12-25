@@ -5,7 +5,7 @@ import './RecipeDetails.css';
 
 const RecipeDetails = () => {
 
-    const { id } = useParams();
+    const { id } = useParams(); // powerful line!
 
     const [details, setDetails] = useState(null);
     const [loading, setLoading] = useState(true);

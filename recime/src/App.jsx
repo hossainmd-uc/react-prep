@@ -3,6 +3,8 @@ import './App.css'
 import Search from './components/Search'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import RecipeDetails from './components/RecipeDetails'
+import About from './components/About'
+import Sidebar from './components/Sidebar'
 
 function App() {
 
@@ -14,8 +16,11 @@ function App() {
       <Routes>
         <Route path='/' element={<Search setSearchData={setSearchData} searchData={searchData} />}/> 
         <Route path='/recipe/:id' element={<RecipeDetails />}/> 
+        <Route path='/about' element={<About />}/>
 
       </Routes>
+
+      <Sidebar />
 
     </BrowserRouter>
 
