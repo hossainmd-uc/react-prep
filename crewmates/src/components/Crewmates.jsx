@@ -1,4 +1,4 @@
-import { FormGroup, Checkbox, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, TextField, Button } from '@mui/material'
+import { FormGroup, Checkbox, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, TextField, Button, InputLabel, Select, MenuItem } from '@mui/material'
 import React, { useState } from 'react'
 import './Crewmates.css'
 
@@ -10,13 +10,58 @@ const Crewmates = () => {
     const [name, setName] = useState('')
     const [speed, setSpeed] = useState('')
     const [color, setColor] = useState('')
+    const [open, setOpen] = useState(false);
+
+
+    const colors = ["Black",
+        "White",
+        "Gray",
+        "Silver",
+        "Charcoal",
+        "Navy",
+        "Blue",
+        "Sky blue",
+        "Teal",
+        "Turquoise",
+        "Green",
+        "Lime",
+        "Olive",
+        "Yellow",
+        "Gold",
+        "Orange",
+        "Coral",
+        "Red",
+        "Maroon",
+        "Pink",
+        "Magenta",
+        "Purple",
+        "Violet",
+        "Lavender",
+        "Brown",
+        "Tan",
+        "Beige",
+        "Cream"]
+
+
+    const handleChange = (event) => {
+        setColor(event.target.value);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
 
     async function createPlayer(e) {
         e.preventDefault();
-        // console.log(name.length < 10, [10, 15, 20, 25].includes(parseInt(speed)), ['Red', 'Green', 'Orange', 'Yellow'].includes(color))
 
-        if (!(name.length < 10 && [10, 15, 20, 25].includes(parseInt(speed)) &&
-            ['Green', 'Orange', 'Yellow', 'Red'].includes(color))) {
+        console.log()
+
+        if (!(name.length < 15 && [10, 15, 20, 25].includes(parseInt(speed)) &&
+            colors.includes(color))) {
             alert('Invalid entries or options submitted!')
             return
         }
@@ -50,13 +95,23 @@ const Crewmates = () => {
                     </RadioGroup>
                 </FormControl>
                 <FormControl>
-                    <RadioGroup onChange={e => setColor(e.target.value)}>
-                        <FormLabel id='radio-buttons-color'>Color</FormLabel>
-                        <FormControlLabel value='Red' control={<Radio />} label='Red'></FormControlLabel>
-                        <FormControlLabel value='Orange' control={<Radio />} label='Orange'></FormControlLabel>
-                        <FormControlLabel value='Yellow' control={<Radio />} label='Yellow'></FormControlLabel>
-                        <FormControlLabel value='Green' control={<Radio />} label='Green'></FormControlLabel>
-                    </RadioGroup>
+                    <InputLabel id='select-label'></InputLabel>
+                    <Select className='color-selection' labelId="select-label"
+                        id="demo-controlled-open-select"
+                        open={open}
+                        onClose={handleClose}
+                        onOpen={handleOpen}
+                        value={color}
+                        label="Age"
+                        onChange={handleChange}>
+                        {colors.map((color, i) => {
+                            return (
+                                <MenuItem value={color}>{color}</MenuItem>
+                            )
+                        })}
+
+                    </Select>
+
                 </FormControl>
 
                 <Button type='submit' color='secondary'>Create Crewmate</Button>

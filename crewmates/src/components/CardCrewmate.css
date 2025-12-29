@@ -1,0 +1,43 @@
+.card{
+    text-align: left;
+  display:flex;
+  flex-direction:row;
+  gap:14px;
+  align-items:center; /* or flex-start */
+}
+
+.card .avatar{
+  width:120px;
+  height:120px;
+  flex:0 0 120px;     /* don’t let it stretch */
+  object-fit:contain;
+  border-radius:14px;
+}
+
+.card .info{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  min-width:0;        /* important so text can shrink/wrap instead of blowing out */
+  flex:1;
+}
+
+.card .row{
+  display:flex;
+  gap:8px;
+  align-items:baseline;
+}
+
+.card h4{
+  margin:0;
+  font-size:.9rem;
+  font-weight:700;
+  opacity:.9;
+  white-space:nowrap;
+}
+
+.card .row span{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap; /* remove if you want wrapping */
+}

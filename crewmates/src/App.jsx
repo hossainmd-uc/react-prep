@@ -2,6 +2,7 @@ import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Crewmates from './components/Crewmates'
 import { Box, CssBaseline, ThemeProvider, createTheme } from '@mui/material';
+import ViewCrewmates from './components/ViewCrewmates';
 
 const darkTheme = createTheme({
   palette: {
@@ -17,7 +18,7 @@ function App() {
       <Box sx={{ minHeight: "100vh", bgcolor: "background.default", color: "text.primary" }}>
       <BrowserRouter>
         <Routes>
-          <Route index element={<Crewmates />}>
+          <Route index element={<><Crewmates /> <ViewCrewmates /></>}>
           </Route>
         </Routes>
       </BrowserRouter>

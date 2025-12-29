@@ -13,3 +13,8 @@
     border: 2px solid #ab47bc;
     padding: 20px;
 }
+
+.color-selection{
+    width: 100px;
+    overflow:hidden;
+}
