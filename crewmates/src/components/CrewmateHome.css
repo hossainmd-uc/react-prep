@@ -1,0 +1,31 @@
+.main {
+    margin-top: 10vh;
+}
+
+.selection-container {
+    display: flex;
+    flex-direction: column;
+    border: 3px solid rgb(108, 108, 108);
+    border-radius: 10px;
+
+    width: 140px;
+    margin: 0 auto;
+
+
+
+}
+
+.nav-option {
+    font-size: x-large;
+    text-decoration: none;
+    color: white
+}
+
+.nav-option:hover {
+    background-color: rgb(163, 163, 163);
+    transition: background-color .5s;
+}
+
+.heading {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+}

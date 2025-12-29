@@ -4,6 +4,8 @@
   flex-direction:row;
   gap:14px;
   align-items:center; /* or flex-start */
+
+  max-width: 300px;
 }
 
 .card .avatar{

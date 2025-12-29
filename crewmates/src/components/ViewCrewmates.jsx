@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { supabase } from '../data/config'
 import CardCrewmate from './CardCrewmate';
 
+import './ViewCrewmates.css'
+
 const ViewCrewmates = () => {
 
     const [data, setData] = useState(null)
