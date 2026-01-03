@@ -4,26 +4,11 @@ import { Button } from '@mui/material'
 
 import { supabase } from '../data/config'
 
-const CardCrewmate = ({ crewmateData }) => {
-
-    async function removeCrewmate(id) {
-        if (id == null) {
-            throw new Error("removeCrewmate called without a valid id");
-        }
-
-        const response = await supabase
-            .from('Players')
-            .delete()
-            .eq('id', id)
-
-        if (response.error) {
-            throw error;
-        }
+const CardCrewmate = ({ crewmateData, removeCrewmate }) => {
 
 
-    }
 
-    return crewmateData?.length > 0 ? (
+    return crewmateData &&  (
         <div className="card">
             <img className="avatar" src="amongus.png" alt="Crewmate" />
             <div className="info">
@@ -42,7 +27,7 @@ const CardCrewmate = ({ crewmateData }) => {
                 </Button>
             </div>
         </div>
-    ) : <h1> Add crewmates !</h1>;
+    ) 
 
 }
 
