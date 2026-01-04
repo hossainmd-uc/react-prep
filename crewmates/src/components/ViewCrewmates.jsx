@@ -63,7 +63,7 @@ const ViewCrewmates = () => {
             {
                 data && data.map((crewmate, i) => {
                     // console.log(crewmate)
-                    return <CardCrewmate key={'crewmate ' + i} removeCrewmate={removeCrewmate} crewmateData={crewmate} />
+                    return <CardCrewmate key={'crewmate ' + i} removeCrewmate={removeCrewmate} setData={setData} crewmateData={crewmate} />
                 })
             }
         </div>

@@ -5,7 +5,7 @@ import UpdateDialog from './UpdateDialog'
 
 import { supabase } from '../data/config'
 
-const CardCrewmate = ({ crewmateData, removeCrewmate}) => {
+const CardCrewmate = ({ setData, crewmateData, removeCrewmate}) => {
 
     const [dialogOpen, setDialogOpen] = useState(false)
 
@@ -44,7 +44,7 @@ const CardCrewmate = ({ crewmateData, removeCrewmate}) => {
                 </Button>
 
             </div>
-            <UpdateDialog data={crewmateData} dialogOpen={dialogOpen} handleDialogOpen={handleDialogOpen} handleDialogClose={handleDialogClose}/>
+            <UpdateDialog setData={setData} data={crewmateData} dialogOpen={dialogOpen} handleDialogOpen={handleDialogOpen} handleDialogClose={handleDialogClose}/>
         </div>
     )
 

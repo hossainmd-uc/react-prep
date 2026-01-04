@@ -1,9 +1,11 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { RadioGroup, FormLabel, FormControlLabel, Radio, Dialog, DialogTitle, DialogContent, Button, DialogContentText, TextField, FormControl, Select, MenuItem, InputLabel } from '@mui/material'
 
 import { colors, speeds } from './CrewmateConstraints'
 
-const UpdateDialog = ({ data, dialogOpen, handleDialogClose }) => {
+import { supabase } from '../data/config'
+
+const UpdateDialog = ({ setData, data, dialogOpen, handleDialogClose }) => {
 
     const [open, setOpen] = useState(dialogOpen)
     const [name, setName] = useState(data.name)
@@ -22,9 +24,36 @@ const UpdateDialog = ({ data, dialogOpen, handleDialogClose }) => {
         setOpen(true);
     };
 
+    async function updateData(id) {
+
+        console.log(data)
+
+        if (!(data.speed === speed && data.color === color && data.name === name)) {
+            const { resp, error } = await supabase
+                .from('Players')
+                .update({ name: name, speed: speed, color: color })
+                .eq('id', id)
+                .select()
+
+            if (error) {
+                throw new Error("Error while updating:\n" + error.message)
+            } else {
+                setData(prev =>
+                    prev.map(c => (c.id === id ? { ...c, name, speed, color } : c))
+                )
+            }
+        } else {
+            console.log("Values must not be the same!")
+        }
+
+    }
+
     function onSubmit(e) {
+        // console.log('submitting!')
         e.preventDefault();
-        // const {}
+        // console.log(data.id)
+        updateData(data.id)
+
     }
 
     return (
@@ -42,7 +71,8 @@ const UpdateDialog = ({ data, dialogOpen, handleDialogClose }) => {
                             label="Crewmate Name"
                             type='text'
                             variant='standard'
-                            defaultValue={name}
+                            value={name}
+                            onChange={e => setName(e.target.value)}
 
                         />
                         <FormControl>
@@ -73,9 +103,11 @@ const UpdateDialog = ({ data, dialogOpen, handleDialogClose }) => {
                             </Select>
 
                         </FormControl>
+                        <Button type='submit'>Submit</Button>
                     </form>
                 </DialogContent>
                 <Button onClick={handleDialogClose}>Cancel</Button>
+
             </Dialog>
         </div>
     )
