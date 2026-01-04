@@ -1,14 +1,24 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './CardCrewmate.css'
 import { Button } from '@mui/material'
+import UpdateDialog from './UpdateDialog'
 
 import { supabase } from '../data/config'
 
-const CardCrewmate = ({ crewmateData, removeCrewmate }) => {
+const CardCrewmate = ({ crewmateData, removeCrewmate}) => {
+
+    const [dialogOpen, setDialogOpen] = useState(false)
 
 
+    const handleDialogOpen = () => {
+        setDialogOpen(true);
+    };
 
-    return crewmateData &&  (
+    const handleDialogClose = () => {
+        setDialogOpen(false);
+    };
+
+    return crewmateData && (
         <div className="card">
             <img className="avatar" src="amongus.png" alt="Crewmate" />
             <div className="info">
@@ -25,9 +35,18 @@ const CardCrewmate = ({ crewmateData, removeCrewmate }) => {
                 >
                     Remove
                 </Button>
+                <Button
+                    onClick={() => handleDialogOpen()}
+                    variant="contained"
+                // color="error"
+                >
+                    Edit
+                </Button>
+
             </div>
+            <UpdateDialog data={crewmateData} dialogOpen={dialogOpen} handleDialogOpen={handleDialogOpen} handleDialogClose={handleDialogClose}/>
         </div>
-    ) 
+    )
 
 }
 

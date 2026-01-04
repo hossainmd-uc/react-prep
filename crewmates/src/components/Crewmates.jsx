@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import './Crewmates.css'
 
 import { supabase } from '../data/config'
+import { colors, nameLength, speeds } from './CrewmateConstraints'
 
 
 const Crewmates = () => {
@@ -11,36 +12,6 @@ const Crewmates = () => {
     const [speed, setSpeed] = useState('')
     const [color, setColor] = useState('')
     const [open, setOpen] = useState(false);
-
-
-    const colors = ["Black",
-        "White",
-        "Gray",
-        "Silver",
-        "Charcoal",
-        "Navy",
-        "Blue",
-        "Sky blue",
-        "Teal",
-        "Turquoise",
-        "Green",
-        "Lime",
-        "Olive",
-        "Yellow",
-        "Gold",
-        "Orange",
-        "Coral",
-        "Red",
-        "Maroon",
-        "Pink",
-        "Magenta",
-        "Purple",
-        "Violet",
-        "Lavender",
-        "Brown",
-        "Tan",
-        "Beige",
-        "Cream"]
 
 
     const handleChange = (event) => {
@@ -60,7 +31,7 @@ const Crewmates = () => {
 
         console.log()
 
-        if (!(name.length < 15 && [10, 15, 20, 25].includes(parseInt(speed)) &&
+        if (!(name.length < nameLength && speeds.includes(parseInt(speed)) &&
             colors.includes(color))) {
             alert('Invalid entries or options submitted!')
             return
