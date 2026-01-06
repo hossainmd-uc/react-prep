@@ -4,6 +4,7 @@ import Crewmates from './components/Crewmates'
 import { Box, CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import ViewCrewmates from './components/ViewCrewmates';
 import CrewmateHome from './components/CrewmateHome';
+import CrewmateInfo from './components/CrewmateInfo';
 
 const darkTheme = createTheme({
   palette: {
@@ -22,6 +23,7 @@ function App() {
             <Route index element={<CrewmateHome />} />
             <Route path='create' element={<><Crewmates /> </>} />
             <Route path='view' element={<><ViewCrewmates /> </>} />
+            <Route path='view/:id' element={<><CrewmateInfo /> </>} />
           </Routes>
         </BrowserRouter>
       </Box>

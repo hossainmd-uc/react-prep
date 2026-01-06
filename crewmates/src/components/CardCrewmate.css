@@ -1,4 +1,15 @@
+.stretchedLink {
+  position: absolute;
+  inset: 0;
+  display: block;
+  z-index: 0;
+}
+
 .card{
+
+  position: relative;
+
+  
     text-align: left;
   display:flex;
   flex-direction:row;

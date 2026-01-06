@@ -4,8 +4,9 @@ import { Button } from '@mui/material'
 import UpdateDialog from './UpdateDialog'
 
 import { supabase } from '../data/config'
+import { NavLink } from 'react-router-dom'
 
-const CardCrewmate = ({ setData, crewmateData, removeCrewmate}) => {
+const CardCrewmate = ({ setData, crewmateData, removeCrewmate }) => {
 
     const [dialogOpen, setDialogOpen] = useState(false)
 
@@ -19,7 +20,9 @@ const CardCrewmate = ({ setData, crewmateData, removeCrewmate}) => {
     };
 
     return crewmateData && (
+
         <div className="card">
+            <NavLink to={`/view/${crewmateData.id}`} className="stretchedLink" aria-label="Open crewmate" />
             <img className="avatar" src="amongus.png" alt="Crewmate" />
             <div className="info">
                 <h3>Crewmate</h3>
@@ -44,8 +47,9 @@ const CardCrewmate = ({ setData, crewmateData, removeCrewmate}) => {
                 </Button>
 
             </div>
-            <UpdateDialog setData={setData} data={crewmateData} dialogOpen={dialogOpen} handleDialogOpen={handleDialogOpen} handleDialogClose={handleDialogClose}/>
+            <UpdateDialog setData={setData} data={crewmateData} dialogOpen={dialogOpen} handleDialogOpen={handleDialogOpen} handleDialogClose={handleDialogClose} />
         </div>
+
     )
 
 }
