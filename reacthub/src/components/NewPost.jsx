@@ -6,6 +6,7 @@ import { Button } from './ui/button'
 import { Textarea } from './ui/textarea'
 import { Label } from './ui/label'
 import { supabase } from "../../config"
+import { useAuth } from './AuthProvider'
 
 const NewPost = () => {
 
@@ -13,10 +14,12 @@ const NewPost = () => {
     const [body, setBody] = useState('')
     const [image, setImage] = useState('')
 
+    const { user } = useAuth()
+
     async function createPost(e) {
         e.preventDefault();
 
-        const post = { title, body, image }
+        const post = { title, body, image, user_id: user.id }
 
         const { data, error, status } = await supabase
             .from('posts')
