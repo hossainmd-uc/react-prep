@@ -1,11 +1,36 @@
-import React from "react"
+import React, {useState, useEffect} from "react"
 import { Input } from "./ui/input"
 import { Button } from "./ui/button"
 import { useNavigate, Link } from "react-router-dom"
 import { supabase } from "../../config" // adjust if needed
+import { useAuth } from "./AuthProvider"
+import { Label } from "./ui/label"
 
 const HubHome = () => {
+
+  const [username, setUsername] = useState('')
+
   const navigate = useNavigate()
+
+  const { user } = useAuth()
+
+  async function fetchUsername() {
+
+    const { data, error } = await supabase.from('profiles').select('username').eq('id', user.id).single()
+
+    if (error){
+      console.error("Unable to fetch username")
+    }
+
+    setUsername(data.username)
+    console.log("Successfully fetched username")
+
+
+  }
+
+  useEffect(() => {
+    fetchUsername()
+  }, [user?.id])
 
   function newPost() {
     navigate("/new")
@@ -36,7 +61,8 @@ const HubHome = () => {
       </Button>
 
       {/* Right side */}
-      <div className="ml-auto flex items-center">
+      <div className="ml-auto flex items-center gap-2">
+        <Label><strong>{username}</strong></Label>
         <Button variant="outline" onClick={signOut} className="cursor-pointer">
           Sign out
         </Button>

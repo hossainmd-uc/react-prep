@@ -6,6 +6,20 @@ const Posts = () => {
 
     const [data, setData] = useState([])
 
+    async function deletePost(id) {
+
+        const { status, error } = await supabase.from('posts').delete().eq('id', id)
+
+        if (error){
+            console.error("Error deleting.", error)
+        }
+
+        retrivePosts()
+
+        console.log(status)
+
+    }
+
     async function retrivePosts() {
 
         const { data, error } = await supabase.from('posts').select('*')
@@ -27,7 +41,7 @@ const Posts = () => {
         <div className='flex flex-col gap-2 text-left m-5'>
             <h1>Posts</h1>
             {data && data.map(post => {
-                return <PostCard key={post.id} post={post} />
+                return <PostCard deletePost={deletePost} key={post.id} post={post} />
             })}
         </div>
     )

@@ -42,6 +42,7 @@ export default function App() {
             <Route path="/editUsername" element={<CreateUsername />} />
             <Route path="/view" element={<Posts />} />
             <Route path="/new" element={<NewPost />} />
+            <Route path="/edit/:id" element={<NewPost />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/view" replace />} />
