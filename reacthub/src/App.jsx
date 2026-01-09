@@ -10,6 +10,7 @@ import { AuthProvider } from "./components/AuthProvider"
 
 import './App.css'
 import CreateUsername from "./components/CreateUsername"
+import PostView from "./components/PostView"
 
 function AppLayout() {
   return (
@@ -43,6 +44,7 @@ export default function App() {
             <Route path="/view" element={<Posts />} />
             <Route path="/new" element={<NewPost />} />
             <Route path="/edit/:id" element={<NewPost />} />
+            <Route path="/view/:id" element={<PostView />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/view" replace />} />

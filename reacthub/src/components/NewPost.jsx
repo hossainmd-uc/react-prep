@@ -9,10 +9,14 @@ import { Button } from './ui/button'
 import { Textarea } from './ui/textarea'
 import { Label } from './ui/label'
 import { supabase } from "../../config"
+
 import { useAuth } from './AuthProvider'
 import { useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const NewPost = () => {
+
+    const navigate = useNavigate()
 
     const [showSuccess, setShowSuccess] = useState(false)
 
@@ -25,25 +29,42 @@ const NewPost = () => {
     const params = useParams()
     const id = params?.id
 
-    async function retrivePosts() {
+    async function retrievePosts() {
+        const postId = Number(id)
+        if (!Number.isFinite(postId)) return
 
-        if (!Number.isFinite(Number(id))) return;
+        // must be logged in to edit
+        if (!user) {
+            navigate("/login") // or wherever
+            return
+        }
 
-        const { data, error } = await supabase.from('posts').select('*').eq('id', Number(id)).single()
+        const { data, error } = await supabase
+            .from("posts")
+            .select("*")
+            .eq("id", postId)
+            .single()
 
         if (error) {
             console.error("Retrieval failed:", error.message, error)
+            return
         }
 
-        console.log("Retrieval Succeeded: ", data)
+        // owner check
+        if (data.user_id !== user.id) {
+            navigate(`/view/${postId}`) // bounce them out
+            return
+        }
+
         setTitle(data.title)
         setBody(data.body)
         setImage(data.image)
 
+
     }
 
     useEffect(() => {
-        retrivePosts()
+        retrievePosts()
     }
         , [id])
 
@@ -78,6 +99,7 @@ const NewPost = () => {
             .from('posts')
             .update(post)
             .eq("id", id)
+            .eq("user_id", user.id) // extra safety even before RLS
             .select();
 
         if (error) {
